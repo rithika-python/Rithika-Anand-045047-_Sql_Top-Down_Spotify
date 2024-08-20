@@ -1,0 +1,46 @@
+---Creating Id and Password for Administrator
+CREATE user 'Administrator'@'localhost' Identified by '123456';
+
+---Creating Id and Password for ContentManager
+CREATE user 'ContentManager'@'localhost' Identified by 'abcdef';
+
+---Creating Id and Password for CustomerSupport
+CREATE user 'CustomerSupport'@'localhost' Identified by 'abc123';
+
+---Grant Permissions for different user
+---Administrator Role Permissions
+
+-- Full access to User Management
+GRANT ALL ON spotify.User TO 'Administrator'@'localhost';
+
+-- Full access to System Settings (Assume a Settings table exists)
+GRANT ALL PRIVILEGES ON Settings TO Administrator;
+
+-- Full access to Content Management
+GRANT ALL ON spotify.Song TO 'Administrator'@'localhost';
+GRANT ALL ON spotify.Album TO 'Administrator'@'localhost';
+GRANT ALL ON spotify.Artist TO 'Administrator'@'localhost';
+GRANT ALL ON spotify.Playlist TO 'Administrator'@'localhost';
+GRANT ALL ON spotify.Genre TO 'Administrator'@'localhost';
+
+---Content Manager Role Permissions
+
+-- Content Management
+GRANT SELECT, INSERT, UPDATE, DELETE ON spotify.Song TO 'ContentManager'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON spotify.Album TO 'ContentManager'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON spotify.Artist TO 'ContentManager'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON spotify.Playlist TO 'ContentManager'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON spotify.Genre TO 'ContentManager'@'localhost';
+
+---Customer Support Role Permissions
+
+-- View User Information
+GRANT SELECT ON spotify.User TO 'CustomerSupport'@'localhost';
+
+-- Manage User Subscriptions 
+GRANT SELECT, UPDATE ON spotify.Subscriptions TO 'CustomerSupport'@'localhost';
+
+-- Limited Content Access
+GRANT SELECT ON spotify.Song TO 'CustomerSupport'@'localhost';
+GRANT SELECT ON spotify.Album TO 'CustomerSupport'@'localhost';
+GRANT SELECT ON spotify.Playlist TO 'CustomerSupport'@'localhost';
